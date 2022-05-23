@@ -24,7 +24,8 @@ app.post('/login', function (req, res) {
 	var username = req.body.username;
 	var password = req.body.password;
 	var query = "SELECT title FROM user where username = '" + username + "' and password = '" + password + "'";
-
+    console.log(username)
+;
     db.get(query, function (err, row) {
 
 		if (err) {
@@ -40,3 +41,8 @@ app.post('/login', function (req, res) {
 })
 
 app.listen(5000);
+
+
+// The way the query was written, makes it possible for attackers to manipulate it the query conditions and makes it return the data according to the attacker's manipulation. 
+
+// Putting "unknown' OR '1'='1" as a password changes the query itself when entered and makes the condition true all the time.

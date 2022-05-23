@@ -24,4 +24,19 @@ app.post('/login', function (req, res) {
 	var username = req.body.username;
 	var password = req.body.password;
 	var query = "SELECT title FROM user where username = '" + username + "' and password = '" + password + "'";
+
+    db.get(query, function (err, row) {
+
+		if (err) {
+            console.log('ERROR', err);
+			res.redirect("/index.html#error");
+		} else if (!row) {
+			res.redirect("/index.html#unauthorized");
+		} else {
+			res.send('Hello <b>' + row.title + '!</b><br /> This file contains all your secret data: <br /><br /> SECRETS <br /><br /> MORE SECRETS <br /><br /> <a href="/index.html">Go back to login</a>');
+		}
+	});
+
 })
+
+app.listen(5000);
